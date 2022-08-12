@@ -1,0 +1,36 @@
+port: 8888
+socks-port: 7891
+redir-port: 7892
+allow-lan: false
+mode: Rule
+log-level: info
+external-controller: 127.0.0.1:9090
+secret: ""
+cfw-bypass:
+  - localhost
+  - 127.*
+  - <local>
+cfw-latency-timeout: 3000
+proxies:
+  - name: 58Office
+    type: http
+    server: 10.252.137.97
+    port: "8888"
+  - name: 58Group
+    type: http
+    server: 10.253.54.105
+    port: "8888"
+  - name: Home
+    type: http
+    server: 192.168.3.3
+    port: "8888"
+proxy-groups:
+  - name: Charles
+    type: select
+    proxies:
+      - 58Office
+      - 58Group
+      - Home
+rules:
+  - DOMAIN-SUFFIX,58.com,Charles
+  - DOMAIN-SUFFIX,ganji.com,Charles
